@@ -392,7 +392,7 @@ $jenis_bencana 	= $this->input->post('jenis_bencana');
 	{
 		$p = $this->input->post('p');
 		
-	$data['categories'] =$this->stories_model->kategori("1");
+	$data['categories'] =$this->stories_model->peruntukan("1");
 		$this->load->view('backend3/ajaxcontent/loadCategories', $data);
 	}
 	public function removecategory()

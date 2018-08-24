@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 private $user_id = "";
+
 	function __construct()
 	{
 		parent::__construct();
@@ -11,17 +12,18 @@ private $user_id = "";
 		$this->load->model('dashboard_model');
 		$this->load->model('customer_model','customers');
 		$this->load->model('user_model');
-		
+		set_time_limit(3600);
 
 		$this->user_id = $this->session->userdata('userid');
 		if (!$this->admin_model->check_admin()) redirect('/', 'location'); //die("admin only");
-        
+		
+	
 	}
     /* dashboard */
 	public function index() 
 	{
 		redirect('/admin/dashboard', 'location');
-	//	redirect('/admin/daftar_sungai', 'location');
+	//	redirect('/admin/daftar_udara', 'location');
 
 	}
 	public function dashboard()
@@ -29,7 +31,7 @@ private $user_id = "";
 		$sel['sel'] = "dashboard";
 		//$p = $this->input->post('p');
 		
-		$data['sungai'] = $this->admin_model->get_ika();		
+		$data['sungai'] = $this->admin_model->get_ika_dashboard();		 
 		
 		//print_r($data);
   		$this->load->view('layout/header');
@@ -102,29 +104,29 @@ private $user_id = "";
         $this->load->view('layout/footer');
 	}
 */
-	public function daftar_sungai()
+	public function daftar_udara()
 	{
-		$sel['sel'] = "daftar_sungai";
+		$sel['sel'] = "daftar_udara";
 	
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/daftar_sungai');
+        $this->load->view('admin/daftar_udara');
         $this->load->view('layout/footer');
 	}
 
 	
 
-	public function load_sungai()
+	public function load_udara()
 	{
 		$p = $this->input->post('p');
 		
-		$data['sungai'] = $this->admin_model->get_lokasi_sungai('', $p, '', 'all');		
+		$data['sungai'] = $this->admin_model->get_lokasi_udara('', $p, '', 'all');		
 		
 		// $this->load->view('admin/ajaxcontent/loadSungai', $data);
-		$this->load->view('admin/load_Sungai', $data);
+		$this->load->view('admin/load_udara', $data);
 	}
 
-	function add_sungai() {
+	function add_udara() {
 		$sel['sel'] = "sungai";
 		$data['provinsi'] 		= $this->admin_model->data_provinsi();
 		$data['kabupaten'] 			= $this->admin_model->data_kabupaten();
@@ -144,7 +146,7 @@ private $user_id = "";
 		
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/add_sungai',$data);
+        $this->load->view('admin/add_udara',$data);
         $this->load->view('layout/footer');
 	}
 
@@ -168,13 +170,13 @@ private $user_id = "";
         $this->load->view('layout/footer');
 	}
 
-	public function sungaieditdata() {
+	public function Udaraeditdata() {
 		
 			if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;	
 			$id =  $_POST['id'];
 			$lokasi = $_POST['lokasi'];
 			$sungai = $_POST['sungai'];
-			$kategori = $_POST['kategori'];
+			$peruntukan = $_POST['peruntukan'];
 			$id_prov = $_POST['id_prov'];
 			$id_kab = $_POST['id_kab'];
 			$lintang = $_POST['lintang'];
@@ -184,7 +186,7 @@ private $user_id = "";
 				'id' => $id,
 				'lokasi' => $lokasi,
 				'sungai' => $sungai,
-				'kategori' => $kategori,
+				'peruntukan' => $peruntukan,
 				'id_prov'  => $id_prov,
 				'id_kab' => $id_kab,
 				'lintang'  => $lintang,
@@ -198,47 +200,49 @@ private $user_id = "";
 			echo "edit";	 
 	}
 
-	public function data_sungai()
+	public function data_udara()
 	{
-		$sel['sel'] = "data_sungai";
-	
+		$year = $this->uri->segment('3');
+		$sel['sel'] = "data_udara";
+		if (isset($year)){$data['tahun'] = $year;} else {$data['tahun'] = date("Y");}
+		
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/data_sungai');
+        $this->load->view('admin/data_udara',$data);
         $this->load->view('layout/footer');
 	}
 
-	public function load_data_sungai()
+	public function load_data_udara($years)
 	{
-		$p = $this->input->post('p');
+		//$p = $this->input->post('p');
 		
-		$data['sungai'] = $this->admin_model->get_data_sungai('', $p, '', 'all');		
+		$data['sungai'] = $this->admin_model->get_data_udara($years);		
 		
-		// $this->load->view('admin/ajaxcontent/loadDataSungai', $data);
-		$this->load->view('admin/load_DataSungai', $data);
+		// $this->load->view('admin/ajaxcontent/loadDataUdara', $data);
+		$this->load->view('admin/load_DataUdara', $data);
 	}
 
-	public function parameter_sungai()
+	public function parameter_udara()
 	{
-		$sel['sel'] = "parameter_sungai";
+		$sel['sel'] = "parameter_udara";
 	
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/daftar_par_sungai');
+        $this->load->view('admin/daftar_par_udara');
         $this->load->view('layout/footer');
 	}
 
-	public function load_par_sungai()
+	public function load_par_udara()
 	{
 		$p = $this->input->post('p');
 		
-		$data['sungai'] = $this->admin_model->get_parameter_sungai('', $p, '', 'all');		
+		$data['sungai'] = $this->admin_model->get_parameter_udara('', $p, '', 'all');		
 		
-		// $this->load->view('admin/ajaxcontent/loadParSungai', $data);
-		$this->load->view('admin/load_ParSungai', $data);
+		// $this->load->view('admin/ajaxcontent/loadParUdara', $data);
+		$this->load->view('admin/load_ParUdara', $data);
 	}
 
-	function add_par_sungai() {
+	function add_par_udara() {
 		$sel['sel'] = "sungai";
 		$data['provinsi'] 		= $this->admin_model->data_provinsi();
 		$data['kabupaten'] 			= $this->admin_model->data_kabupaten();
@@ -257,41 +261,31 @@ private $user_id = "";
 		*/
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/add_par_sungai',$data);
+        $this->load->view('admin/add_par_udara',$data);
         $this->load->view('layout/footer');
 	}
 
-	public function add_par_sungai_data() 
+	public function add_par_udara_data() 
 	{
 		
 			
-			$tss 	=	$_POST['tss'];
-			$do 	=	$_POST['do'];
-			$bod 	=	$_POST['bod'];
-			$cod 	=	$_POST['cod'];
-			$tf 	=	$_POST['tp'];
-			$fcoli 	=	$_POST['fcoli'];
-			$tcoli 	=	$_POST['tcoli'];
-			
-			
+			$so2 	=	$_POST['so2'];
+			$no2 	=	$_POST['no2'];
+		
 			$deskripsi 	=  $_POST['deskripsi'];
 
-			$datains2['tss'] = $tss;
-            $datains2['do'] = $do;
-            $datains2['bod'] = $bod;
-           	$datains2['cod'] = $cod;
-           	$datains2['tf'] = $tf;
-           	$datains2['fcoli'] = $fcoli;
-			$datains2['tcoli'] = $tcoli;
+			$datains2['so2'] = $so2;
+            $datains2['no2'] = $no2;
+
 			$datains2['ket'] = $deskripsi;
 			
-			$this->db->insert('par_ika', $datains2); 
+			$this->db->insert('par_iku', $datains2); 
 			print_r($datains2);
 			
 			echo "add";	 
 	}
 
-	function add_data_sungai() {
+	function add_data_udara() {
 		$sel['sel'] = "sungai";
 		$data['provinsi'] 		= $this->admin_model->data_provinsi();
 		$data['kabupaten'] 			= $this->admin_model->data_kabupaten();
@@ -312,87 +306,56 @@ private $user_id = "";
 		*/
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/add_data_sungai',$data);
+        $this->load->view('admin/add_data_udara',$data);
         $this->load->view('layout/footer');
 	}
 
-	function add_data_sungaidata() 
+	function add_data_udaradata() 
 	{
-			$kategori   =  $_POST['kategori'];
+			$peruntukan   =  $_POST['peruntukan'];
 			$tanggal =  $_POST['tanggal'];
 			
 			$level 		=  3;
 			
 			$provinsi 	= $_POST['provinsi'];
-			$id_sungai 	= $_POST['lokasi'];
+			//$id_udara 	= $_POST['lokasi'];
 
-			$info_sungai = $this->admin_model->get_specific_sungai($id_sungai);
+			//$info_sungai = $this->admin_model->get_specific_sungai($id_udara);
 			
-			$kabupaten = $info_sungai[0]['id_kab'];
-			$lokasi = $info_sungai[0]['lokasi'];
-			$sungai = $info_sungai[0]['sungai'];
+			//$kabupaten = $info_sungai[0]['id_kab'];
+			$kabupaten =  $_POST['kabupaten'];
+			//$lokasi = $info_sungai[0]['lokasi'];
+			//$sungai = $info_sungai[0]['sungai'];
 			$bujur = $info_sungai[0]['bujur'];
 			$lintang = $info_sungai[0]['lintang'];
 
-			$tss 	=	$_POST['tss'];
-			$do 	=	$_POST['do'];
-			$bod 	=	$_POST['bod'];
-			$cod 	=	$_POST['cod'];
-			$tf 	=	$_POST['tp'];
-			$fcoli 	=	$_POST['fcoli'];
-			$tcoli 	=	$_POST['tcoli'];
-			
+			$so2 	=	$_POST['so2'];
+			$no2 	=	$_POST['no2'];
 			
 			$deskripsi 	=  $_POST['deskripsi'];
 
 
-			$datains2['lokasi'] = $lokasi;
-			$datains2['kode_sungai'] = $sungai;
+			//$datains2['lokasi'] = $lokasi;
+			//$datains2['kode_sungai'] = $sungai;
 			$datains2['id_prov'] = $provinsi;
 			$datains2['id_kab'] = $kabupaten;
-			$datains2['kategori'] = $kategori;
+			$datains2['peruntukan'] = $peruntukan;
 			$datains2['usr_lv'] = $level;
-			$datains2['lat'] = $bujur;
-			$datains2['lon'] = $lintang;
-			$datains2['tss'] = $tss;
-            $datains2['do'] = $do;
-            $datains2['bod'] = $bod;
-           	$datains2['cod'] = $cod;
-           	$datains2['tf'] = $tf;
-           	$datains2['fcoli'] = $fcoli;
-			$datains2['tcoli'] = $tcoli;
+			//$datains2['lat'] = $bujur;
+			//$datains2['lon'] = $lintang;
+			$datains2['so2'] = $so2;
+            $datains2['no2'] = $no2;
+
 			$datains2['ket'] = $deskripsi;
-			$datains2['validated'] = 1;
+			//$datains2['validated'] = 1;
 			$datains2['tanggal'] = $tanggal;
 			$datains2['date_input'] = date("Y-m-d H:i:s");
 			
-			$this->db->insert('tbl_sungai', $datains2); 
+			$this->db->insert('tbl_udara', $datains2); 
 
 			print_r($datains2);
 			
 			echo "add";	 
-	}
-	
-	function add_kelompok_tani() {
-		$sel['sel'] = "users";
-		$data['kecamatan'] 		= $this->dashboard_model->data_kecamatan();
-		$data['desa'] 			= $this->dashboard_model->data_desa();
-		$this->load->library('googlemaps');
-
-		$config['center'] = '	-7.546839, 112.226479';
-		$config['zoom'] = '12';
-		$this->googlemaps->initialize($config);
-
-		$marker = array();
-		$marker['position'] = '	-7.546839,  112.226479';
-		$marker['draggable'] = true;
-		$marker['ondragend'] = '$("#latitude").val(event.latLng.lat());$("#longitude").val(event.latLng.lng());';
-		$this->googlemaps->add_marker($marker);
-		$data['map'] = $this->googlemaps->create_map();
-		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/add_kelompok_tani',$data);
-        $this->load->view('layout/footer');
 	}
 
 	public function petugas(){
@@ -460,9 +423,9 @@ private $user_id = "";
 		$sel['sel'] = "users";
 	
         $this->load->helper('captcha');
-        $random_number = substr(number_format(time() * rand(),0,'',''),0,6);
+        $ranno2m_number = substr(number_format(time() * rand(),0,'',''),0,6);
           $vals = array(
-                 'word' => $random_number,
+                 'word' => $ranno2m_number,
                  'img_path' => './captcha/',
                  'img_url' => base_url().'captcha/',
                  'img_width' => 140,
@@ -911,12 +874,12 @@ private $user_id = "";
 			echo "edit";	 
 	}
 
-	public function add_sungai_data() 
+	public function add_udara_data() 
 	{
 		
 			$nama 	=  $_POST['nama'];   //kode_sungai
 			$titik 	=  $_POST['titik'];  //lokasi pengamatan
-			$kategori   =  $_POST['kategori'];
+			$peruntukan   =  $_POST['peruntukan'];
 			$tanggal =  $_POST['tanggal'];
 			
 			$level 		=  3;
@@ -940,7 +903,7 @@ private $user_id = "";
 
 			$datains2['sungai'] = $nama;
             $datains2['lokasi'] = $titik;
-            $datains2['kategori'] = $kategori;
+            $datains2['peruntukan'] = $peruntukan;
             $datains2['id_prov'] = $provinsi;
             $datains2['id_kab'] = $kabupaten;
          	$datains2['lintang'] = $lintang;
@@ -1178,7 +1141,7 @@ private $user_id = "";
 				$config['file_name'] = $new_name;
                 $this->load->library('upload', $config);
 
-                if ( ! $this->upload->do_upload('foto'))
+                if ( ! $this->upload->no2_upload('foto'))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -1223,7 +1186,7 @@ private $user_id = "";
 				$config['file_name'] = $new_name;
                 $this->load->library('upload', $config);
 
-                if ( ! $this->upload->do_upload('foto'))
+                if ( ! $this->upload->no2_upload('foto'))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -1320,7 +1283,7 @@ private $user_id = "";
 				$config['file_name'] = $new_name;
                 $this->load->library('upload', $config);
 
-                if ( ! $this->upload->do_upload('foto'))
+                if ( ! $this->upload->no2_upload('foto'))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -1412,7 +1375,7 @@ private $user_id = "";
 				$config['file_name'] = $new_name;
                 $this->load->library('upload', $config);
 
-                if ( ! $this->upload->do_upload('foto'))
+                if ( ! $this->upload->no2_upload('foto'))
                 {
                         $error = array('error' => $this->upload->display_errors());
 
@@ -1487,7 +1450,7 @@ private $user_id = "";
 	{
 		$p = $this->input->post('p');
 		
-	$data['categories'] =$this->stories_model->kategori("1");
+	$data['categories'] =$this->stories_model->peruntukan("1");
 		$this->load->view('admin/ajaxcontent/loadCategories', $data);
 	}
 	public function removecategory()
@@ -2038,25 +2001,25 @@ public function remove_pengumuman($id)
 
     }
 
-	function removeparsungai(){		
+	function removeParUdara(){		
 		if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
 		$i = $this->input->post('i');
 		$this->db->where(array("id"=>$i));
-		$this->db->delete("par_ika");
+		$this->db->delete("par_iku");
 	}
 
-	function removedatasungai(){		
+	function removeDataUdara(){		
 		if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
 		$i = $this->input->post('i');
-		$this->db->where(array("id_sungai"=>$i));
-		$this->db->delete("tbl_sungai");
+		$this->db->where(array("id_udara"=>$i));
+		$this->db->delete("tbl_udara");
 	}
 	
-	function validatedatasungai(){		
+	function validateDataUdara(){		
 		if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
 		$i = $this->input->post('i');
-		$this->db->where(array("id_sungai"=>$i));
-		$this->db->update("tbl_sungai", array('validated' => 1));
+		$this->db->where(array("id_udara"=>$i));
+		$this->db->update("tbl_udara", array('validated' => 1));
 	}
 
 }

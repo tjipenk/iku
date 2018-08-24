@@ -3,13 +3,9 @@
                                         <thead>
                                             <tr>
                                                 <th align="right" style="width:11%">Option</th><th>Tanggal</th>
-                                                <th>TSS</th>
-												<th>DO</th>
-												<th>BOD</th>
-												<th>COD</th>
-												<th>Total Fosfat</th>
-												<th>Fecal Coli</th>
-												<th>Total Coli</th>
+                                                <th>SO<sup>2</sup></th>
+												<th>NO<sup>2</sup></th>
+					
 												<th class="hidden-sd hidden-xs">Keterangan</th>
                                             </tr>
                                         </thead>
@@ -19,18 +15,13 @@
                                             <?php foreach($sungai as $pub): ?>
                                                 <tr data-id="<?php echo $pub['id']; ?>">
                                                     <td>
-														<a style="cursor:pointer;" class="removerutilizador"><span class="label label-danger">Hapus</span></a> | 
-														<a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>admin/editsungai/<?php echo $pub['id']; ?>"><span class="label label-warning">Edit</span></a>
+														<a style="cursor:pointer;" class="removerutilizador"><span class="label label-danger">Hapus</span></a> 
+														<!--<a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>admin/edit_par/<?php echo $pub['id']; ?>"><span class="label label-warning">Edit</span></a> -->
 													</td>
                                                     <td><?php echo $pub['date']; ?></td>
-                                                            <td><?php echo $pub['tss'];?></td>
-                                                            <td><?php echo $pub['do'];?></td>																				
-                                                            <td><?php echo $pub['bod'];?></td>																				
-                                                            <td><?php echo $pub['cod'];?></td>																				
-                                                            <td><?php echo $pub['tf'];?></td>																				
-                                                            <td><?php echo $pub['fcoli'];?></td>
-                                                            <td><?php echo $pub['tcoli'];?></td>																				
-                                                            																				
+                                                            <td><?php echo $pub['so2'];?></td>
+                                                            <td><?php echo $pub['no2'];?></td>																				
+                                      									
                                                             <td class="hidden-sd hidden-xs"><?php echo $pub['ket']; ?></td>													
                                                 </tr>       
                                             <?php endforeach; ?>
@@ -47,7 +38,7 @@ jQuery(document).ready(function($){
 				$(this).parent().parent().remove();
 				
 				
-				$.post("<?php echo base_url(); ?>admin/removeparsungai", {
+				$.post("<?php echo base_url(); ?>admin/removeParUdara", {
                 i:i,
                 <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
                 },

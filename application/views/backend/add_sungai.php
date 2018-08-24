@@ -29,7 +29,7 @@ display:none!important;}
                                     
                                     
                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">Nama Sungai</label>
+                                        <label class="col-sm-3 control-label">Nama Udara</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="nama" class="form-control" value="">
                                             <span class="help-block"></span>
@@ -156,7 +156,7 @@ display:none!important;}
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
                                                 <button type="submit" class="btn btn-primary pull-right">Tambah</button>
-                                                <a href="<?php echo site_url('input/daftar_sungai'); ?>">
+                                                <a href="<?php echo site_url('input/daftar_udara'); ?>">
 												<button type="button" class="btn btn-danger">Batal</button>
                                                 <br /><br /><span class="erro" style="color:red;"></span><br />
 												</a>
@@ -193,12 +193,12 @@ display:none!important;}
         $('.btn-primary').click(function() {
 
 $.ajax({
-url: "<?php echo site_url('input/add_sungai_data'); ?>",
+url: "<?php echo site_url('input/add_udara_data'); ?>",
 type: 'POST',
 async : false,
 data: $('#editdata').serialize(),
 success: function(msg) {
-if (msg = "edit") { window.location.replace("<?php echo site_url('input/daftar_sungai'); ?>"); }
+if (msg = "edit") { window.location.replace("<?php echo site_url('input/daftar_udara'); ?>"); }
 }
 });
 return false;

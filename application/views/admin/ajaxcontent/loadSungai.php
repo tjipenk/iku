@@ -7,7 +7,7 @@
                                             <tr>
                                                 <th colspan="2" align="right">Option</th>
                                                 
-                                                <th>Kode Sungai</th>
+                                                <th>Kode Udara</th>
                                                 <th class="hidden-sd hidden-xs">Provinsi</th>
 												
 												<th class="hidden-sd hidden-xs">Koordinat</th>
@@ -64,7 +64,7 @@
 
                                                     <?php else: ?>
 
-                                                    No Sungai.
+                                                    No Udara.
 
                                                     <?php endif; ?>
 

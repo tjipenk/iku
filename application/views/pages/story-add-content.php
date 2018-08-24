@@ -94,7 +94,7 @@ body{
 								 
 								  <div class="append-icon" style="margin-top:10px;">
                                     <div id="filtercategory" class="dropdown" >
-                                      <button style="border:0px!important;width:100%;font-size:16px"class="filterposts dropdown-toggle" type="button" data-toggle="dropdown"><span class="txt">Pilih kategori</span>
+                                      <button style="border:0px!important;width:100%;font-size:16px"class="filterposts dropdown-toggle" type="button" data-toggle="dropdown"><span class="txt">Pilih peruntukan</span>
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu">
                                         <?php if (count($categories)>0): ?>

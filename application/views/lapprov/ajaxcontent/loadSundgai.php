@@ -5,11 +5,12 @@
 <table class="table">
                                         <thead>
                                             <tr>
+											<?php if ($this->session->userdata('level') != 4) { ?>
                                                 <th colspan="2" align="right">Option</th>
-                                                
-                                                <th>Kode Sungai</th>
+											<?php } ?>
+                                                <th>Kode Udara</th>
                                                 <th class="hidden-sd hidden-xs">Provinsi</th>
-												<th class="hidden-sd hidden-xs">Kabupaten</th>
+												
 												<th class="hidden-sd hidden-xs">Koordinat</th>
 												<th class="hidden-sd hidden-xs">Lokasi</th>
                                                 
@@ -49,13 +50,15 @@
                                                         ?>
 
 
-                                                        <tr data-id="<?php echo $pub['id_sungai']; ?>">
+                                                        <tr data-id="<?php echo $pub['id']; ?>">
+														<?php if ($this->session->userdata('level') != 4) { ?>
                                                             <th><a style="cursor:pointer;" class="removerutilizador"><span class="label label-danger">Hapus</span></a></th>
-                                                            <th><a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>input/editsungai/<?php echo $pub['id_sungai']; ?>"><span class="label label-warning">Edit</span></a></th>
-                                                            <td><?php echo $pub['kode_sungai']; ?></td>
-                                                            <td class="hidden-sd hidden-xs"><?php echo $this->input_model->get_nama_wilayah($pub['id_prov'])[0]['nama']; ?></td>
-                                                            <td class="hidden-sd hidden-xs"><?php echo $this->input_model->get_nama_wilayah($pub['id_kab'])[0]['nama'];?></td>															
-                                                            <td class="hidden-sd hidden-xs"><?php echo $pub['lat']."; ".$pub['lon']; ?></td>															
+                                                            <th><a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>admin/editsungai/<?php echo $pub['id']; ?>"><span class="label label-warning">Edit</span></a></th>
+                                                            <?php } ?>
+															<td><?php echo $pub['sungai']; ?></td>
+                                                            <td class="hidden-sd hidden-xs"><?php echo $this->lap_prov_model->get_nama_wilayah($pub['id_prov'])[0]['nama']; ?></td>
+                                                           													
+                                                            <td class="hidden-sd hidden-xs"><?php echo $pub['lintang']."; ".$pub['bujur']; ?></td>															
                                                             <td class="hidden-sd hidden-xs"><?php echo $pub['lokasi']; ?></td>															
                                                         </tr>                                                        
                                                         
@@ -64,7 +67,7 @@
 
                                                     <?php else: ?>
 
-                                                    No Sungai.
+                                                    No Udara.
 
                                                     <?php endif; ?>
 
@@ -82,7 +85,7 @@ jQuery(document).ready(function($){
 				$(this).parent().parent().remove();
 				
 				
-				$.post("<?php echo base_url(); ?>input/removesungai", {
+				$.post("<?php echo base_url(); ?>admin/removesungai", {
                 i:i,
                 <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
                 },

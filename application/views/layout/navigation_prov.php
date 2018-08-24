@@ -17,16 +17,23 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="<?php echo base_url(); ?>admin_prov/dashboard">Akuisisi Data IKA</a>
+      <a class="navbar-brand" href="<?php echo base_url(); ?>admin_prov/dashboard">Akuisisi Data IKU</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
 
         <li class="dropdown ">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Air<span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Udara<span class="caret"></span></a>
           <ul class="dropdown-menu">
-               <li><a href="<?php echo base_url(); ?>admin_prov/daftar_sungai">Daftar Lokasi Sungai</a></li> 
-               <li><a href="<?php echo base_url(); ?>admin_prov/data_sungai">Data Pemantauan</a></li>
+               <li><a href="<?php echo base_url(); ?>admin_prov/daftar_udara">Daftar Lokasi Udara</a></li> 
+               <li class="dropdown-submenu">
+                    <a class="DataUdara" data-toggle="dropdown-submenu" href="#">Data Pemantauan</a>
+                    <ul class="dropdown-menu">
+                    <li><a href="<?php echo base_url(); ?>admin_prov/data_udara/<?php echo date("Y",strtotime("-2 year"));?>"><?php echo date("Y",strtotime("-2 year"));?></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin_prov/data_udara/<?php echo date("Y",strtotime("-1 year"));?>"><?php echo date("Y",strtotime("-1 year"));?></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin_prov/data_udara/<?php echo date('Y');?>"><?php echo date('Y');?></a></li>
+                    </ul>
+                </li>
           </ul>
         </li>
 

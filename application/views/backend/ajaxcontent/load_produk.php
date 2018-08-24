@@ -10,7 +10,7 @@
                                               
                                                 <th>Gambar</th>
 												<th>Stok</th>
-												<th>Kategori produk</th>
+												<th>peruntukan produk</th>
                                                
 												
 												 <th>#</th>

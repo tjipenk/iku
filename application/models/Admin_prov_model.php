@@ -49,7 +49,7 @@ class Admin_prov_model extends CI_Model
 
 	
 
-	public function get_lokasi_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
+	public function get_lokasi_udara($offset = null, $search = "", $filter = "Popular", $all = "") 
 	{
 		# get prov
 		$id_prov = $this->session->userdata("provinsi");
@@ -68,7 +68,7 @@ class Admin_prov_model extends CI_Model
 
 	}
 
-	public function get_parameter_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
+	public function get_parameter_udara($offset = null, $search = "", $filter = "Popular", $all = "") 
 	{
 		$this->db->order_by("id", "desc");			
 		
@@ -77,12 +77,12 @@ class Admin_prov_model extends CI_Model
 		}
 			#$this->db->where('user_level', 0);
 			
-		if ($all == "all") { $query = $this->db->get('par_ika'); } else { $query = $this->db->get('par_ika', 10, $offset); }
+		if ($all == "all") { $query = $this->db->get('par_iku'); } else { $query = $this->db->get('par_iku', 10, $offset); }
 		return $query->result_array();
 
 	}
-
-	public function get_data_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
+	/*
+	public function get_data_udara($offset = null, $search = "", $filter = "Popular", $all = "") 
 	{
 		# get prov
 		$id_prov = $this->session->userdata("provinsi");
@@ -95,11 +95,27 @@ class Admin_prov_model extends CI_Model
 		}
 			#$this->db->where('user_level', 0);
 			
-			$this->db->join('wilayah', 'wilayah.kode = tbl_sungai.id_prov');
+			$this->db->join('wilayah', 'wilayah.kode = tbl_udara.id_prov');
 			
-		if ($all == "all") { $query = $this->db->get('tbl_sungai'); } else { $query = $this->db->get('tbl_sungai', 10, $offset); }
+		if ($all == "all") { $query = $this->db->get('tbl_udara'); } else { $query = $this->db->get('tbl_udara', 10, $offset); }
 		return $query->result_array();
 
+	}
+	*/
+	public function get_data_udara($year) {
+		$id_prov = $this->session->userdata("provinsi");
+
+		$this->db->select('*');
+		$this->db->from('tbl_udara');
+		//$this->db->join('wilayah', 'wilayah.kode = tbl_udara.id_prov');
+		$this->db->like('id_prov', $id_prov);		
+		//$this->db->where('id_prov',$i);
+		$this->db->where('year(tanggal)',$year);
+		
+		//$this->db->limit(1);
+		$query = $this->db->get();
+		 return $query->result_array();
+		//var_dump($query->first_row());
 	}
 
 	public function get_kelompok_tani($offset = null, $search = "", $filter = "Popular", $all = "") 
@@ -413,9 +429,9 @@ class Admin_prov_model extends CI_Model
 		 return $query->result_array();
 	}
 
-	public function get_par_ika() {
+	public function get_par_iku() {
 		$this->db->select('*');
-		$this->db->from('par_ika');
+		$this->db->from('par_iku');
 		$this->db->order_by('id','desc');
 		$this->db->limit(1);
 		$query = $this->db->get();
@@ -424,19 +440,31 @@ class Admin_prov_model extends CI_Model
 
 	public function get_pengamatan_sungai($i) {
 		$this->db->select('*');
-		$this->db->from('tbl_sungai');
-		$this->db->where('id_sungai',$i);
+		$this->db->from('tbl_udara');
+		$this->db->where('id_udara',$i);
 		$this->db->limit(1);
 		$query = $this->db->get();
 		 return $query->result_array();
 		//var_dump($query->first_row());
 	}
 
-	public function get_data_sungai_prov($i) {
+	public function get_data_udara_prov($i) {
 		$this->db->select('*');
-		$this->db->from('tbl_sungai');
+		$this->db->from('tbl_udara');
 		$this->db->where('id_prov',$i);
 		$this->db->where('validated',1);
+		//$this->db->limit(1);
+		$query = $this->db->get();
+		 return $query->result_array();
+		//var_dump($query->first_row());
+	}
+	
+	public function get_data_udara_prov_years($i,$year) {
+		$this->db->select('*');
+		$this->db->from('tbl_udara');
+		$this->db->where('id_prov',$i);
+		$this->db->where('validated',1);
+		$this->db->where('year(tanggal)',$year);
 		//$this->db->limit(1);
 		$query = $this->db->get();
 		 return $query->result_array();
@@ -450,73 +478,78 @@ class Admin_prov_model extends CI_Model
 		return $a;
 	}
 
-	public function hitung_ika($i)
+	public function hitung_iku($i)
 	{
 		$data = $this->get_pengamatan_sungai($i);
-		$par = $this->get_par_ika();
+		if(count($data)!=0){
+		$par = $this->get_par_iku();
 		
-		$cal = array('id_sungai' => $data[0]['id_sungai'],
+		$cal = array('id_udara' => $data[0]['id_udara'],
 					 'id_par' => $par[0]['id'],
-					 'tss'    => $data[0]['tss']/$par[0]['tss'],
-					 'do'  	  => $par[0]['do']/$data[0]['do'],
+					 'so2'    => $data[0]['so2']/$par[0]['so2'],
+					 'no2'  	  => $par[0]['no2']/$data[0]['no2'],
 					 'bod' 	  => $data[0]['bod']/$par[0]['bod'],
 					 'cod' 	  => $data[0]['cod']/$par[0]['cod'],
 					 'tf'	  => $data[0]['tf']/$par[0]['tf'],
 					 'fcoli'  => $data[0]['fcoli']/$par[0]['fcoli'],
 					 'tcoli'  => $data[0]['tcoli']/$par[0]['tcoli']);
 
-		$cal['tss'] = $this->perbaikan_log($cal['tss'] );
-		$cal['do'] = $this->perbaikan_log($cal['do'] );
+		$cal['so2'] = $this->perbaikan_log($cal['so2'] );
+		$cal['no2'] = $this->perbaikan_log($cal['no2'] );
 		$cal['bod'] = $this->perbaikan_log($cal['bod'] );
 		$cal['cod'] = $this->perbaikan_log($cal['cod'] );
 		$cal['tf'] = $this->perbaikan_log($cal['tf'] );
 		$cal['fcoli'] = $this->perbaikan_log($cal['fcoli'] );
 		$cal['tcoli'] = $this->perbaikan_log($cal['tcoli'] );
 							 	
-		$cal['avg']	  = ($cal['tss']+$cal['do']+$cal['bod']+$cal['cod']+$cal['tf']+$cal['fcoli']+$cal['tcoli'])/7;
-		$cal['max']   = max($cal['tss'],$cal['do'],$cal['bod'],$cal['cod'],$cal['tf'],$cal['fcoli'],$cal['tcoli']);
+		$cal['avg']	  = ($cal['so2']+$cal['no2']+$cal['bod']+$cal['cod']+$cal['tf']+$cal['fcoli']+$cal['tcoli'])/7;
+		$cal['max']   = max($cal['so2'],$cal['no2'],$cal['bod'],$cal['cod'],$cal['tf'],$cal['fcoli'],$cal['tcoli']);
 		$cal['avg2'] 	= $cal['avg']*$cal['avg'];
 		$cal['max2'] 	= $cal['max']*$cal['max'];
 		$cal['Pij'] 	= sqrt(($cal['avg2']+$cal['max2'])/2);
 		
 		switch (true) {
 			case $cal['Pij'] <=1 :
-				$cal['ika'] = 100;
+				$cal['iku'] = 100;
 				break;
 			case $cal['Pij'] <=4.67:
-				$cal['ika'] = 80;
+				$cal['iku'] = 80;
 				break;
 			case $cal['Pij'] <=6.32:
-				$cal['ika'] = 60;
+				$cal['iku'] = 60;
 				break;
 			case $cal['Pij'] <=6.88:
-				$cal['ika'] = 40;
+				$cal['iku'] = 40;
 				break;
 			case $cal['Pij'] >=6.88:
-				$cal['ika'] = 20;
+				$cal['iku'] = 20;
 				break;
 			}
+		}
+		else{
+			$cal['iku'] = 0;
+		}
 		//var_dump($cal);
 		return $cal;
 	}
 
-	public function get_ika() 
+	public function get_ika($year) 
 	{
-
+		
 		$r_prov = $this->data_provinsi();
 		$m = 0;
 		foreach ($r_prov as $prov){
-			$r_sungai = $this->get_data_sungai_prov($prov['id_prov']);
+			$r_sungai = $this->get_data_udara_prov_years($prov['id_prov'],$year);
 			$ika = 0; $n = 0;
 				foreach ($r_sungai as $sungai){
 				
-				//	print_r($this->hitung_ika($sungai['id_sungai']));
-					$ika = $ika + $this->hitung_ika($sungai['id_sungai'])['ika'];
+				//	print_r($this->hitung_iku($sungai['id_udara']));
+					$ika = $ika + $this->hitung_iku($sungai['id_udara'])['iku'];
 					$n = $n+1;
 				}
 				$result[$m] = array('id_prov' => $prov['id_prov'],
 							'provinsi' => $prov['prov'],
-							'ika'	=>	$ika/$n);
+							'iku'	=>	$ika/$n);
 			//print_r($result);
 			$m++;
 		}
@@ -524,6 +557,7 @@ class Admin_prov_model extends CI_Model
 	
 		return $result;
 	}
+
     
 }
 

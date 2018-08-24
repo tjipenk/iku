@@ -41,18 +41,18 @@
                                     </div>
 
                                      <div class="form-group">
-                                        <label class="col-sm-3 control-label">Kode Sungai</label>
+                                        <label class="col-sm-3 control-label">Kode Udara</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="sungai" class="form-control" value="<?php echo $dad['sungai']; ?>">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Kategori Stasiun</label>
+                                        <label class="col-sm-3 control-label">peruntukan Stasiun</label>
                                         <div class="col-sm-9">
-                                            <select name="kategori" id="kategori" class="form-control">
-                                            <option value="1" <?php if ($dad['kategori'] == "1") { ?>selected="selected"<?php } ?> >Preoritas</option>
-                                            <option value="0" <?php if ($dad['kategori'] == "0") { ?>selected="selected"<?php } ?>>Non-Preoritas</option>
+                                            <select name="peruntukan" id="peruntukan" class="form-control">
+                                            <option value="1" <?php if ($dad['peruntukan'] == "1") { ?>selected="selected"<?php } ?> >Preoritas</option>
+                                            <option value="0" <?php if ($dad['peruntukan'] == "0") { ?>selected="selected"<?php } ?>>Non-Preoritas</option>
                                             </select>
                                         </div>
                                     </div>
@@ -105,14 +105,14 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">TSS</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="tss" class="form-control" value="<?php echo $dad['tss']; ?>">
+                                            <input type="text" name="tss" class="form-control" value="<?php echo $dad['so2']; ?>">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">DO</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="do" class="form-control" value="<?php echo $dad['do']; ?>">
+                                            <input type="text" name="do" class="form-control" value="<?php echo $dad['no2']; ?>">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
                                                 <button type="submit" class="btn btn-primary">Edit</button>
-                                                <a href="<?php echo site_url('admin/daftar_sungai'); ?>">
+                                                <a href="<?php echo site_url('admin/daftar_udara'); ?>">
 												<button type="button" class="btn btn-danger">Cancel</button>
                                                 <br /><br /><span class="erro" style="color:red;"></span><br />
 												</a>
@@ -200,7 +200,7 @@ type: 'POST',
 async : false,
 data: $('#editdata').serialize(),
 success: function(msg) {
-if (msg = "edit") { window.location.replace("<?php echo site_url('admin/daftar_sungai'); ?>"); }
+if (msg = "edit") { window.location.replace("<?php echo site_url('admin/daftar_udara'); ?>"); }
 }
 });
 return false;

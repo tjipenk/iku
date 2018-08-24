@@ -7,7 +7,7 @@ display:none!important;}
 
    </style> <div class="container header">
 <div class="col-sm-6 col-sm-offset-3 " style="padding: 0px">
-<h1 class="page_title_text">Tambah Data Pengamatan Air</h1>
+<h1 class="page_title_text">Tambah Data Pengamatan Udara</h1>
 </div>
 </div>
             <!-- START Template Container -->
@@ -25,9 +25,9 @@ display:none!important;}
                             <!--/ panel heading/header -->
                             <!-- panel body -->
                             <div class="panel-body">
-							<!--<form id="editdata" class="form-horizontal form-bordered" action="<?php echo site_url('lap_prov/add_data_sungaidata'); ?>" method="post" enctype="multipart/form-data">
-                                --><form id="editdata" class="form-horizontal form-bordered">
-									
+							<form id="editdata" class="form-horizontal form-bordered" action="<?php echo site_url('lap_prov/add_data_udaradata'); ?>" method="post" enctype="multipart/form-data">
+                                <!--<form id="editdata" class="form-horizontal form-bordered">
+									-->
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Provinsi</label>
                                         <div class="col-sm-9">
@@ -65,9 +65,9 @@ display:none!important;}
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Kategori</label>
+                                        <label class="col-sm-3 control-label">peruntukan</label>
                                         <div class="col-sm-9">
-                                            <select name="kategori" id="kategori" class="form-control">
+                                            <select name="peruntukan" id="peruntukan" class="form-control">
                                             <option value="1">Preoritas</option>
                                             <option value="0">Non-Preoritas</option>
                                             </select>
@@ -120,19 +120,29 @@ display:none!important;}
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Deskripsi</label>
                                         <div class="col-sm-9">
-                                        
                                             <textarea class="form-control" name="deskripsi"></textarea>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
+									
+									<div id="uploadfile" class="form-group">
+										<label for="filename" class="col-sm-3 control-label">Attach File</label>
+										<div class="col-sm-9">
+											<div id="uploadfile" class="form-group" style="margin-left: 0px !important;">
+												<input type="file" id="filename" name="filename" class="form-control" readonly />
+												<span class="help-block"><strong>Allowed File Type</strong> : png, jpg, jpeg, pdf with </br><strong>Allowed File Size</strong> : 1 MB</span>
+												<span id="errorFile"></span>
+											</div>
+										</div>
+									</div>
 
                                     <div class="">
                                         <div class="form-group no-border">
                                             <label class="col-sm-3 control-label"></label>
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
-                                                <button type="submit" class="btn btn-primary pull-right">Tambah</button>
-                                                <a href="<?php echo site_url('lap_prov/data_sungai'); ?>">
+                                                <button id="btnTambah" type="submit" class="btn btn-primary pull-right">Tambah</button>
+                                                <a href="<?php echo site_url('lap_prov/data_udara'); ?>">
 												<button type="button" class="btn btn-danger">Batal</button>
                                                 <br /><br /><span class="erro" style="color:red;"></span><br />
 												</a>
@@ -159,7 +169,7 @@ display:none!important;}
 
 
 
-
+/*
    
     $( document ).ready(function () {
       
@@ -168,18 +178,39 @@ display:none!important;}
         $('.btn-primary').click(function() {
 
 $.ajax({
-url: "<?php echo site_url('lap_prov/add_data_sungaidata'); ?>",
+url: "<?php echo site_url('lap_prov/add_data_udaradata'); ?>",
 type: 'POST',
 async : false,
 data: $('#editdata').serialize(),
 success: function(msg) {
-if (msg = "edit") { window.location.replace("<?php echo site_url('lap_prov/data_sungai'); ?>"); }
+if (msg = "edit") { window.location.replace("<?php echo site_url('lap_prov/data_udara'); ?>"); }
 }
 });
 return false;
 });
     
     });
+	*/
+$(function(){
+		$('#filename').change(function(){
+			var f=this.files[0]
+			var ext = $('#filename').val().split('.').pop().toLowerCase();
+			if ((f.size>1024000) || (f.fileSize>1024000 ) || ($.inArray(ext, ['png','jpg','jpeg','pdf'])  < 0))
+			{
+				document.getElementById("uploadfile").className = "form-group has-error";
+				document.getElementById("errorFile").innerHTML = '<label class="help-block" generated="true" for="filename">WARNING! File size or File type is not Allowed.</label>';
+				document.getElementById("btnTambah").disabled = true;
+			}
+			else
+			{
+				document.getElementById("uploadfile").className = "form-group";
+				document.getElementById("errorFile").innerHTML = '';
+				document.getElementById("btnTambah").disabled = false;
+			}
+		})
+		
+	})	
+	
   </script> 
                 
 

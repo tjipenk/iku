@@ -29,7 +29,7 @@ class Admin_model extends CI_Model
 
 	}
 
-	public function get_lokasi_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
+	public function get_lokasi_udara($offset = null, $search = "", $filter = "Popular", $all = "") 
 	{
 		$this->db->order_by("kode_sungai", "desc");			
 		
@@ -38,7 +38,7 @@ class Admin_model extends CI_Model
 		}
 			#$this->db->where('user_level', 0);
 			
-		if ($all == "all") { $query = $this->db->get('tbl_sungai'); } else { $query = $this->db->get('tbl_sungai', 10, $offset); }
+		if ($all == "all") { $query = $this->db->get('tbl_udara'); } else { $query = $this->db->get('tbl_udara', 10, $offset); }
 		return $query->result_array();
 
 	}

@@ -55,7 +55,7 @@
 
                                                     <?php else: ?>
 
-                                                    No Data Sungai.
+                                                    No Data Udara.
 
                                                     <?php endif; ?>
 

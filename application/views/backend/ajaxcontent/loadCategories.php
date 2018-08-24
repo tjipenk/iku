@@ -3,7 +3,7 @@
                                             <tr>
                                                 
 												<th>Id</th>
-												<th>Nama kategori</th>  
+												<th>Nama peruntukan</th>  
 <th style="width:70px;">#</th>   <th style="width:70px;">#</th>
                                                 												
                                             </tr>

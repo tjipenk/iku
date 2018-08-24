@@ -7,7 +7,7 @@ display:none!important;}
 
    </style> <div class="container header">
 <div class="col-sm-6 col-sm-offset-3 " style="padding: 0px">
-<h1 class="page_title_text">Edit Data Pengamatan Air</h1>
+<h1 class="page_title_text">Edit Data Pengamatan Udara</h1>
 </div>
 </div>
             <!-- START Template Container -->
@@ -26,9 +26,10 @@ display:none!important;}
                             <!-- panel body -->
 							<?php foreach($stories as $dad):?>
                             <div class="panel-body">
-							<!--<form id="editdata" class="form-horizontal form-bordered" action="<?php echo site_url('lap_prov/edit_data_sungaidata'); ?>" method="post" enctype="multipart/form-data">
-                                --><form id="editdata" class="form-horizontal form-bordered">
-									<input type="hidden" readonly name="id_sungai" value="<?php echo $dad['id_sungai']; ?>" class="form-control">
+							<form id="editdata" class="form-horizontal form-bordered" action="<?php echo site_url('lap_prov/edit_data_udaradata'); ?>" method="post" enctype="multipart/form-data">
+                                <!--<form id="editdata" class="form-horizontal form-bordered">
+									-->
+									<input type="hidden" readonly name="id_udara" value="<?php echo $dad['id_udara']; ?>" class="form-control">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Provinsi</label>
                                         <div class="col-sm-9">
@@ -55,8 +56,8 @@ display:none!important;}
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Kategori</label>
-										<?php $kat = $dad['kategori'];
+                                        <label class="col-sm-3 control-label">peruntukan</label>
+										<?php $kat = $dad['peruntukan'];
 										if ($kat==0) {
 											$kate = 'Non-Preoritas';
 										} else {
@@ -64,19 +65,19 @@ display:none!important;}
 										}
 										?>
                                         <div class="col-sm-9">
-                                            <input readonly type="text" name="kategori" value="<?php echo $kate; ?>" class="form-control">
+                                            <input readonly type="text" name="peruntukan" value="<?php echo $kate; ?>" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">TSS</label>
                                         <div class="col-sm-9">
-                                            <input type="number" name="tss" class="form-control" value="<?php echo $dad['tss']; ?>">
+                                            <input type="number" name="tss" class="form-control" value="<?php echo $dad['so2']; ?>">
                                             <span class="help-block"></span>
                                         </div>
                                     
                                         <label class="col-sm-3 control-label">DO</label>
                                         <div class="col-sm-9">
-                                            <input type="number" name="do" class="form-control" value="<?php echo $dad['do']; ?>">
+                                            <input type="number" name="do" class="form-control" value="<?php echo $dad['no2']; ?>">
                                             <span class="help-block"></span>
                                         </div>
 
@@ -115,18 +116,38 @@ display:none!important;}
                                         <label class="col-sm-3 control-label">Deskripsi</label>
                                         <div class="col-sm-9">
                                         
-                                            <textarea class="form-control" name="deskripsi"></textarea>
+                                            <textarea class="form-control" name="deskripsi"><?php echo $dad['ket']; ?></textarea>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
+									<div class="form-group">
+                                        <label class="col-sm-3 control-label">File</label>
+                                        <div class="col-sm-9">
+											<?php if($dad['file']=='kosong') { ?>
+												<strong>No File</strong>
+												<?php } else { ?>
+												<a href="<?php echo base_url(); ?>upload/<?php echo $dad['file']; ?>" target="_blank"><img src="<?php echo base_url(); ?>images/file-icon.png" height="30px" width="30px" alt="View Data" title="View Data"  /></a>
+												<?php } ?>
+                                        </div>
+                                    </div>
+									<div id="uploadfile" class="form-group">
+										<label for="filename" class="col-sm-3 control-label">Attach File</label>
+										<div class="col-sm-9">
+											<div id="uploadfile" class="form-group" style="margin-left: 0px !important;">
+												<input type="file" id="filename" name="filename" class="form-control" readonly />
+												<span class="help-block"><strong>Allowed File Type</strong> : png, jpg, jpeg, pdf with </br><strong>Allowed File Size</strong> : 1 MB</span>
+												<span id="errorFile"></span>
+											</div>
+										</div>
+									</div>
 
                                     <div class="">
                                         <div class="form-group no-border">
                                             <label class="col-sm-3 control-label"></label>
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
-                                                <button type="submit" class="btn btn-primary pull-right">Edit</button>
-                                                <a href="<?php echo site_url('lap_prov/data_sungai'); ?>">
+                                                <button id="btnTambah" type="submit" class="btn btn-primary pull-right">Edit</button>
+                                                <a href="<?php echo site_url('lap_prov/data_udara'); ?>">
 												<button type="button" class="btn btn-danger">Batal</button>
                                                 <br /><br /><span class="erro" style="color:red;"></span><br />
 												</a>
@@ -142,7 +163,8 @@ display:none!important;}
                     </div>
                 </div>
                 <!--/ END row -->
-<script>     
+<script>
+/*     
     $( document ).ready(function () {
       
         
@@ -150,18 +172,39 @@ display:none!important;}
         $('.btn-primary').click(function() {
 
 $.ajax({
-url: "<?php echo site_url('lap_prov/edit_data_sungaidata'); ?>",
+url: "<?php echo site_url('lap_prov/edit_data_udaradata'); ?>",
 type: 'POST',
 async : false,
 data: $('#editdata').serialize(),
 success: function(msg) {
-if (msg = "edit") { window.location.replace("<?php echo site_url('lap_prov/data_sungai'); ?>"); }
+if (msg = "edit") { window.location.replace("<?php echo site_url('lap_prov/data_udara'); ?>"); }
 }
 });
 return false;
 });
     
     });
+	*/
+	
+$(function(){
+		$('#filename').change(function(){
+			var f=this.files[0]
+			var ext = $('#filename').val().split('.').pop().toLowerCase();
+			if ((f.size>1024000) || (f.fileSize>1024000 ) || ($.inArray(ext, ['png','jpg','jpeg','pdf'])  < 0))
+			{
+				document.getElementById("uploadfile").className = "form-group has-error";
+				document.getElementById("errorFile").innerHTML = '<label class="help-block" generated="true" for="filename">WARNING! File size or File type is not Allowed.</label>';
+				document.getElementById("btnTambah").disabled = true;
+			}
+			else
+			{
+				document.getElementById("uploadfile").className = "form-group";
+				document.getElementById("errorFile").innerHTML = '';
+				document.getElementById("btnTambah").disabled = false;
+			}
+		})
+		
+	})		
   </script>             
 
             </div>

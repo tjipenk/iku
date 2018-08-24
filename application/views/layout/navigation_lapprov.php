@@ -19,26 +19,26 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="<?php echo base_url(); ?>lap_prov/daftar_sungai">Akuisisi Data IKLH</a>
+      <a class="navbar-brand" href="<?php echo base_url(); ?>lap_prov/daftar_udara">Akuisisi Data IKLH</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
 
         <li class="dropdown ">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Sungai<span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Udara<span class="caret"></span></a>
           <ul class="dropdown-menu">
 		  <!--
-               <li><a href="<?php echo base_url(); ?>lap_prov/daftar_sungai">Daftar Lokasi Sungai</a></li> 
-               <li><a href="<?php echo base_url(); ?>lap_prov/parameter_sungai">Parameter Air</a></li>-->
-               <li><a href="<?php echo base_url(); ?>lap_prov/data_sungai">Data Pemantauan</a></li>
+               <li><a href="<?php echo base_url(); ?>lap_prov/daftar_udara">Daftar Lokasi Udara</a></li> 
+               <li><a href="<?php echo base_url(); ?>lap_prov/parameter_udara">Parameter Udara</a></li>-->
+               <li><a href="<?php echo base_url(); ?>lap_prov/data_udara">Data Pemantauan</a></li>
           </ul>
         </li>
 		<!--
         <li class="dropdown ">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Udara<span class="caret"></span></a>
           <ul class="dropdown-menu">
-               <li><a href="<?php echo base_url(); ?>lap_prov/daftar_sungai">Daftar Lokasi</a></li> 
-               <li><a href="<?php echo base_url(); ?>lap_prov/data_sungai">Data Pemantauan</a></li>
+               <li><a href="<?php echo base_url(); ?>lap_prov/daftar_udara">Daftar Lokasi</a></li> 
+               <li><a href="<?php echo base_url(); ?>lap_prov/data_udara">Data Pemantauan</a></li>
           </ul>
         </li>
 		
@@ -47,7 +47,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Petugas<span class="caret"></span></a>
           <ul class="dropdown-menu">
                <li><a href="<?php echo base_url(); ?>lap_prov/users">Daftar Petugas</a></li> 
-               <li><a href="<?php echo base_url(); ?>lap_prov/data_sungai">Data Pemantauan</a></li>
+               <li><a href="<?php echo base_url(); ?>lap_prov/data_udara">Data Pemantauan</a></li>
           </ul>
         </li>
 		-->

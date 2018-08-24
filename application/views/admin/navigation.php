@@ -23,19 +23,25 @@
       <ul class="nav navbar-nav">
 
         <li class="dropdown ">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Sungai<span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Udara<span class="caret"></span></a>
           <ul class="dropdown-menu">
-               <li><a href="<?php echo base_url(); ?>admin/daftar_sungai">Daftar Lokasi Sungai</a></li> 
-               <li><a href="<?php echo base_url(); ?>admin/parameter_sungai">Parameter Air</a></li>
-               <li><a href="<?php echo base_url(); ?>admin/data_sungai">Data Pemantauan</a></li>
+               <li><a href="<?php echo base_url(); ?>admin/daftar_udara">Daftar Lokasi Udara</a></li> 
+               <li><a href="<?php echo base_url(); ?>admin/parameter_udara">Parameter Udara</a></li>
+               <li><a href="<?php echo base_url(); ?>admin/data_udara">Data Pemantauan</a></li>
+               <li class="dropdown ">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Udara<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                    <li><a href="<?php echo base_url(); ?>admin/data_udara/2016">2016</a></li>
+                    </ul>
+                </li>
           </ul>
         </li>
 
         <li class="dropdown ">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Udara<span class="caret"></span></a>
           <ul class="dropdown-menu">
-               <li><a href="<?php echo base_url(); ?>admin/daftar_sungai">Daftar Lokasi</a></li> 
-               <li><a href="<?php echo base_url(); ?>admin/data_sungai">Data Pemantauan</a></li>
+               <li><a href="<?php echo base_url(); ?>admin/daftar_udara">Daftar Lokasi</a></li> 
+               <li><a href="<?php echo base_url(); ?>admin/data_udara">Data Pemantauan</a></li>
           </ul>
         </li>
 
@@ -43,7 +49,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Petugas<span class="caret"></span></a>
           <ul class="dropdown-menu">
                <li><a href="<?php echo base_url(); ?>admin/users">Daftar Petugas</a></li> 
-               <li><a href="<?php echo base_url(); ?>admin/data_sungai">Data Pemantauan</a></li>
+               <li><a href="<?php echo base_url(); ?>admin/data_udara">Data Pemantauan</a></li>
           </ul>
         </li>
 

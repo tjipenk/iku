@@ -46,7 +46,7 @@
                                 <div class="append-icon" style="margin-top:10px;">
                                     <div id="filtercategory" class="dropdown">
 									
-                                      <button class="filterposts dropdown-toggle" type="button" data-toggle="dropdown"><span class="txt">Pilih kategori</span>
+                                      <button class="filterposts dropdown-toggle" type="button" data-toggle="dropdown"><span class="txt">Pilih peruntukan</span>
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu">
                                         <?php if (count($categories)>0): ?>
