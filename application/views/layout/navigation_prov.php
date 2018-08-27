@@ -25,7 +25,7 @@
         <li class="dropdown ">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Udara<span class="caret"></span></a>
           <ul class="dropdown-menu">
-               <li><a href="<?php echo base_url(); ?>admin_prov/daftar_udara">Daftar Lokasi Udara</a></li> 
+               <li hidden><a href="<?php echo base_url(); ?>admin_prov/daftar_udara">Daftar Lokasi Udara</a></li> 
                <li class="dropdown-submenu">
                     <a class="DataUdara" data-toggle="dropdown-submenu" href="#">Data Pemantauan</a>
                     <ul class="dropdown-menu">

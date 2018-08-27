@@ -24,9 +24,33 @@ private $user_id = "";
 	/* dashboard */
 	public function index() {
 	//	redirect('/admin/dashboard', 'location');
-		redirect('/admin_prov/daftar_udara', 'location');
+		redirect('/admin_prov/data_udara', 'location');
 
 	}
+	
+	public function data_udara(){
+		$year = $this->uri->segment('3');
+		$sel['sel'] = "data_udara";
+		if (isset($year)){$data['tahun'] = $year;} else {$data['tahun'] = date("Y");}
+	
+		$data['data_ika'] = $this->admin_model->get_ika($year);
+	
+		$this->load->view('layout/header');
+        $this->load->view('layout/navigation_prov', $sel);
+        $this->load->view('admin_prov/data_udara',$data);
+        $this->load->view('layout/footer');
+	}
+	
+	public function load_data_udara($years){
+		$p = $this->input->post('p');
+			
+		$data['sungai'] = $this->admin_model->get_data_udara($years);		
+		// print_r($this->db->last_query());print_r($data['sungai']);die();
+	
+		$this->load->view('admin_prov/load_DataUdara', $data);
+	}
+
+	
 	
 	public function dashboard()
     {
@@ -434,30 +458,9 @@ private $user_id = "";
 			echo "edit";	 
 	}
 
-	public function data_udara(){
-		$year = $this->uri->segment('3');
-		$sel['sel'] = "data_udara";
-		if (isset($year)){$data['tahun'] = $year;} else {$data['tahun'] = date("Y");}
 	
-	//		$sel['sel'] = "data_udara";
-		$data['data_ika'] = $this->admin_model->get_ika($year);
-	
-		$this->load->view('layout/header');
-        $this->load->view('layout/navigation_prov', $sel);
-        $this->load->view('admin_prov/data_udara',$data);
-        $this->load->view('layout/footer');
-	}
 
-	public function load_data_udara($years){
-		$p = $this->input->post('p');
-		
-		// $data['sungai'] = $this->admin_model->get_data_udara('', $p, '', 'all');		
-		$data['sungai'] = $this->admin_model->get_data_udara($years);		
 	
-		// $this->load->view('admin/ajaxcontent/loadDataUdara', $data);
-		$this->load->view('admin_prov/load_DataUdara', $data);
-	}
-
 	public function parameter_udara(){
 		$sel['sel'] = "parameter_udara";
 	
@@ -553,6 +556,7 @@ private $user_id = "";
 	}
 
 	function add_data_udaradata() {
+			// print_r($_POST['tanggal']);die();
 			$peruntukan   =  $_POST['peruntukan'];
 			$tanggal =  $_POST['tanggal'];
 			
@@ -561,25 +565,37 @@ private $user_id = "";
 			// $provinsi 	= $_POST['provinsi'];
 			$provinsi 	= $this->session->userdata("provinsi");
 			$id_udara 	= $_POST['lokasi'];
-
-			$info_sungai = $this->admin_model->get_specific_sungai($id_udara);
 			
-			$kabupaten = $info_sungai[0]['id_kab'];
-			$lokasi = $info_sungai[0]['lokasi'];
-			$sungai = $info_sungai[0]['sungai'];
-			$bujur = $info_sungai[0]['bujur'];
-			$lintang = $info_sungai[0]['lintang'];
+			$bujur = 0;
+			$lintang = 0;
+			
+			// if(strlen($lokasi)==0){
+				$lokasi = ' ';
+			// }
+			// if(strlen($sungai)==0){
+				$sungai = ' ';
+			// }
+			// if(strlen($kabupaten)==0){
+				$kabupaten = $_POST['kabupaten'];
+			// }
 
 			$tss 	=	$_POST['so2'];
 			$do 	=	$_POST['no2'];
-			$bod 	=	$_POST['bod'];
-			$cod 	=	$_POST['cod'];
-			$tf 	=	$_POST['tp'];
-			$fcoli 	=	$_POST['fcoli'];
-			$tcoli 	=	$_POST['tcoli'];
+			// $bod 	=	$_POST['bod'];
+			// $cod 	=	$_POST['cod'];
+			// $tf 	=	$_POST['tp'];
+			// $fcoli 	=	$_POST['fcoli'];
+			// $tcoli 	=	$_POST['tcoli'];
+			
+			// $tanggal 	=	$_POST['tanggal'];
+			if(strlen($tanggal)==0){
+				$tanggal = date("Y-m-d");
+			}
 			
 			
 			$deskripsi 	=  $_POST['deskripsi'];
+			
+			$datains2['tanggal'] = $tanggal;
 
 
 			$datains2['lokasi'] = $lokasi;
@@ -592,11 +608,11 @@ private $user_id = "";
 			$datains2['lon'] = $lintang;
 			$datains2['so2'] = $tss;
             $datains2['no2'] = $do;
-            $datains2['bod'] = $bod;
-           	$datains2['cod'] = $cod;
-           	$datains2['tf'] = $tf;
-           	$datains2['fcoli'] = $fcoli;
-			$datains2['tcoli'] = $tcoli;
+            // $datains2['bod'] = $bod;
+           	// $datains2['cod'] = $cod;
+           	// $datains2['tf'] = $tf;
+           	// $datains2['fcoli'] = $fcoli;
+			// $datains2['tcoli'] = $tcoli;
 			$datains2['ket'] = $deskripsi;
 			//$datains2['validated'] = 1;
 			$datains2['date_input'] = date("Y-m-d H:i:s");

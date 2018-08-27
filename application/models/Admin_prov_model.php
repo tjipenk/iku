@@ -108,7 +108,8 @@ class Admin_prov_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tbl_udara');
 		//$this->db->join('wilayah', 'wilayah.kode = tbl_udara.id_prov');
-		$this->db->like('id_prov', $id_prov);		
+		// $this->db->like('id_prov', $id_prov);		
+		$this->db->where('id_prov', $id_prov);		
 		//$this->db->where('id_prov',$i);
 		$this->db->where('year(tanggal)',$year);
 		
@@ -556,6 +557,28 @@ class Admin_prov_model extends CI_Model
 		//print_r($result);
 	
 		return $result;
+	}
+	
+	function get_peruntukan($i) {
+		switch ($i) {
+			case 1:
+				$r = "Transportasi";
+				break;
+			case 2:
+				$r = "Industri";
+				break;
+			case 3:
+				$r = "Perkantoran";
+				break;
+			case 4:
+				$r = "Perumahan";
+				break;
+			case 0:
+				$r = "BLANK";
+				break;	
+		}
+
+		return $r;
 	}
 
     
